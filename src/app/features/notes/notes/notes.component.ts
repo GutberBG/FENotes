@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NotesService } from '../../notes.service';
 import { AuthService } from 'src/app/core/auth.service';
+import { TagsService } from '../../tags/tags.service';
 
 @Component({
   selector: 'app-notes',
@@ -8,16 +9,21 @@ import { AuthService } from 'src/app/core/auth.service';
   styleUrls: ['./notes.component.css']
 })
 export class NotesComponent implements OnInit {
-  notes: any[] = []; // Array para almacenar las notas
-  userId: number = 0; // Reemplázalo con el id del usuario actualmente autenticado
-  archived: boolean = false; // Para obtener notas archivadas o no
+  notes: any[] = [];
+  filteredNotes: any[] = [];
+  tags: any[] = [];
+  userId: number = 0;
+  archived: boolean = false; 
+  selectedNote: any = null;
+  selectedSection: string | null = null;
+  selectedTag: any | null = null;
 
-  constructor(private notesService: NotesService, private authService: AuthService) {}
+  constructor(private notesService: NotesService, private authService: AuthService, private tagsService: TagsService) { }
 
   ngOnInit(): void {
     console.log('NotesComponent initialized');
 
-    // Recuperar userId desde el localStorage
+    
     const storedUser = localStorage.getItem('currentUser');
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);
@@ -25,31 +31,67 @@ export class NotesComponent implements OnInit {
       console.log('User ID from localStorage:', this.userId);
     }
 
-    // Verificar si el usuario está autenticado
+    
     this.authService.getCurrentUser().subscribe((user) => {
       if (user && this.userId !== null) {
-        this.loadNotes(); // Carga las notas si el usuario está autenticado y tiene userId
+        this.loadNotes(false);
+        this.loadTags();
       }
     });
   }
 
-  loadNotes(): void {
+  loadNotes(archived: boolean): void {
+    this.selectedSection = archived ? 'archived' : 'all';
+    this.selectedTag = null;
+    this.archived = archived; // Establece el estado de archivado
     const token = localStorage.getItem('currentUser') ? JSON.parse(localStorage.getItem('currentUser')!).token : '';
     console.log('Token: ' + token);
-    
-    this.notesService.getNotesByUser(this.userId, token).subscribe((data: any) => {
+
+    this.notesService.getNotesByUserAndArchived(this.userId, this.archived, token).subscribe((data: any) => {
       this.notes = data;
+      this.filteredNotes = data;
     });
   }
 
   loadArchivedNotes(): void {
     this.notesService.getUserArchivedNotes(this.userId, this.archived).subscribe((data: any) => {
       this.notes = data;
+      this.filteredNotes = data;
     });
   }
 
   toggleArchived(): void {
     this.archived = !this.archived;
     this.loadArchivedNotes();
+  }
+
+  selectNote(note: any): void {
+    this.selectedNote = note;
+  }
+
+  loadTags(): void {
+    const token = localStorage.getItem('currentUser') ? JSON.parse(localStorage.getItem('currentUser')!).token : '';
+    if (token) {
+      this.tagsService.getTagsByUser(this.userId, token).subscribe(
+        (tags) => {
+          this.tags = tags;
+        },
+        (error) => {
+          console.error('Error fetching tags:', error);
+        }
+      );
+    }
+  }
+
+  filterNotesByTag(tag: any): void {
+    this.selectedTag = tag;
+    console.log('Filtering notes by tag:', tag);
+    if (tag) {
+      console.log('Filtering notes by tag:', tag);
+      console.log('Tag notes:', this.notes.filter(note => tag.notes.includes(note.id)));
+      this.filteredNotes = this.notes.filter(note => tag.notes.includes(note.id));
+    } else {
+      this.filteredNotes = this.notes;
+    }
   }
 }

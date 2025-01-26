@@ -25,4 +25,15 @@ export class NotesService {
   getUserArchivedNotes(userId: number, archived: boolean): Observable<any> {
     return this.http.get(`${this.apiUrl}/user/${userId}/archived`, { params: { archived: archived.toString() } });
   }
+
+  // Obtener todas las notas no archivadas de un usuario
+  getNotesByUserAndArchived(userId: number, archived: boolean, token: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+
+    const params = { archived: archived.toString() };
+    return this.http.get(`${this.apiUrl}/user/${userId}/archived`, { headers, params, responseType: 'json' });
+  }
 }
