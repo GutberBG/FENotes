@@ -39,7 +39,7 @@ export class LoginComponent {
     this.authService.login({ username, password }).subscribe(
       (response) => {
         // Manejar la respuesta exitosa, redirigir al usuario
-        this.router.navigate(['/auth/register']);
+        this.router.navigate(['notes']);
       },
       (error) => {
         // Manejar error

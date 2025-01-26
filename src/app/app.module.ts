@@ -10,10 +10,12 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './core/auth.interceptor';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NotesComponent } from './features/notes/notes/notes.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    NotesComponent
   ],
   imports: [
     BrowserModule,

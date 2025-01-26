@@ -22,18 +22,27 @@ export class AuthService {
     const params = new HttpParams()
       .set('username', credentials.username)
       .set('password', credentials.password);
+
+      const storedUser = localStorage.getItem('currentUser');
+      console.log('Stored user before login:', storedUser);
   
-    return this.http.post(`${this.apiUrl}/login`, null, { params, responseType: 'text' }).pipe(
-      map((response: string) => { // La respuesta es un string (token)
-        if (response) {
-          const user = { token: response }; // Se guarda el token
+    return this.http.post(`${this.apiUrl}/login`, null, { params, responseType: 'json' }).pipe(
+      map((response: any) => {
+        if (response && response.token) {
+          const user = { 
+            token: response.token,
+            userId: response.userId
+          };
           localStorage.setItem('currentUser', JSON.stringify(user));
           this.currentUserSubject.next(user);
+          console.log('Login successful' + JSON.stringify(user));
         }
+        
+        console.log('Stored user after login:', localStorage.getItem('currentUser'));
+        console.log(response.token);
         return response;
       }),
       catchError((error) => {
-        // Maneja el error
         console.error('Login failed', error);
         throw error;
       })
