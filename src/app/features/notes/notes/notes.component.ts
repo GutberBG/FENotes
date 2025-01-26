@@ -21,6 +21,7 @@ export class NotesComponent implements OnInit {
   token: string = localStorage.getItem('currentUser') ? JSON.parse(localStorage.getItem('currentUser')!).token : '';
   toastMessage: string = 'Nota actualizada con éxito.';
   searchQuery: string = '';
+  isDeleteModalOpen: boolean = false;
 
   newNote = {
     id: 0,
@@ -247,7 +248,7 @@ export class NotesComponent implements OnInit {
   }
 
   // Método para eliminar una nota
-  deleteNote() {
+  confirmDelete() {
     if (!this.selectedNote || this.selectedNote.id === null || this.selectedNote.id === 0) {
       this.showToast("Seleccione una nota.");
       return;
@@ -258,12 +259,27 @@ export class NotesComponent implements OnInit {
         console.log('Nota eliminada');
         this.loadNotes(false);
         this.showToast("Nota eliminada con éxito.");
+        this.cancelDelete();
+        this.selectedNote = null;
       },
       (error) => {
         console.error('Error al eliminar la nota:', error);
+        this.cancelDelete();
       }
     );
   }
+
+  openDeleteModal(): void {
+    this.isDeleteModalOpen = true;
+  }
+
+  // Método para cancelar la eliminación
+  cancelDelete(): void {
+    this.isDeleteModalOpen = false;
+  }
+
+
+
   toggleArchiveState() {
     if (this.selectedSection === 'archived') {
       // Si el estado actual es "archivado", desarchivar
