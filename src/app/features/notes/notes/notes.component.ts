@@ -86,8 +86,19 @@ export class NotesComponent implements OnInit {
   }
 
   onContentChange(event: any): void {
-    this.newNote.content = event.target.innerText;
-  }
+    const target = event.target;
+    this.newNote.content = target.innerHTML;
+    
+    requestAnimationFrame(() => {
+      
+      const range = document.createRange();
+      const sel = window.getSelection();
+      range.selectNodeContents(target);
+      range.collapse(false);
+      sel?.removeAllRanges();
+      sel?.addRange(range);
+    });
+   }
 
   showSuccessToast: boolean = false;
   
@@ -112,9 +123,10 @@ export class NotesComponent implements OnInit {
       this.notesService.createNote(this.newNote, this.token).subscribe(
         (response) => {
           console.log('Nota creada:', response);
-          //this.notes.push(response); // Agregar la nueva nota a la lista
-          //this.filteredNotes.push(response); // Agregar a la lista filtrada
-          this.cancelCreation(); // Salir del modo de creación
+          this.loadNotes(false);
+          this.showToast("Nota creada con éxito.");
+          
+          this.cancelCreation();
         },
         (error) => {
           console.error('Error al crear la nota:', error);
@@ -141,17 +153,6 @@ export class NotesComponent implements OnInit {
         }
       );
     }
-    /*this.notesService.createNote(this.newNote, this.token).subscribe(
-      (response) => {
-        console.log('Nota creada:', response);
-        this.notes.push(response); // Agregar la nueva nota a la lista
-        this.filteredNotes.push(response); // Agregar a la lista filtrada
-        this.cancelCreation(); // Salir del modo de creación
-      },
-      (error) => {
-        console.error('Error al crear la nota:', error);
-      }
-    );*/
   }
   loadNotes(archived: boolean): void {
     this.selectedSection = archived ? 'archived' : 'all';
@@ -206,6 +207,36 @@ export class NotesComponent implements OnInit {
       this.filteredNotes = this.notes.filter(note => tag.notes.includes(note.id));
     } else {
       this.filteredNotes = this.notes;
+    }
+  }
+  archiveNote() {
+    if (this.selectedNote) {
+      this.notesService.archiveNote(this.selectedNote.id).subscribe(
+        (archivedNote) => {
+          console.log('Nota archivada:', archivedNote);
+          this.loadNotes(false);
+          this.showToast("Nota archivada con éxito.");
+        },
+        (error) => {
+          console.error('Error al archivar la nota:', error);
+        }
+      );
+    }
+  }
+
+  // Método para eliminar una nota
+  deleteNote() {
+    if (this.selectedNote) {
+      this.notesService.deleteNote(this.selectedNote.id).subscribe(
+        () => {
+          console.log('Nota eliminada');
+          this.loadNotes(false);
+          this.showToast("Nota eliminada con éxito.");
+        },
+        (error) => {
+          console.error('Error al eliminar la nota:', error);
+        }
+      );
     }
   }
 }

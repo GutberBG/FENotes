@@ -62,4 +62,14 @@ export class NotesService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.put<any>(`${this.apiUrl}/${id}`, note, { headers });
   }
+
+   // Método para archivar una nota
+   archiveNote(id: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/${id}/archive`, {});
+  }
+
+  // Método para eliminar una nota
+  deleteNote(id: number): Observable<Object> {
+    return this.http.delete(`${this.apiUrl}/${id}`);
+  }
 }
