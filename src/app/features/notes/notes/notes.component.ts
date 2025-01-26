@@ -12,7 +12,6 @@ export class NotesComponent implements OnInit {
   notes: any[] = [];
   filteredNotes: any[] = [];
   tags: any[] = [];
-  userId: number = 0;
   archived: boolean = false;
   selectedNote: any = null;
   selectedSection: string | null = null;
@@ -22,6 +21,7 @@ export class NotesComponent implements OnInit {
   toastMessage: string = 'Nota actualizada con éxito.';
   searchQuery: string = '';
   isDeleteModalOpen: boolean = false;
+  userId: number = localStorage.getItem('currentUser') ? JSON.parse(localStorage.getItem('currentUser')!).userId : 0;
 
   newNote = {
     id: 0,
@@ -31,7 +31,7 @@ export class NotesComponent implements OnInit {
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
     deleted: false,
-    userId: 1, // Reemplazar con el ID de usuario correspondiente
+    userId: this.userId,
     tags: ["no label"] as string[]
   };
 
@@ -48,7 +48,7 @@ export class NotesComponent implements OnInit {
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
       deleted: false,
-      userId: 1,
+      userId: this.userId,
       tags: ["no label"]
     };
     this.selectedNote = this.newNote;
@@ -124,15 +124,15 @@ export class NotesComponent implements OnInit {
   
   // Método para mostrar el toast
   showToast(message: string) {
-    this.toastMessage = message;  // Asignar el mensaje dinámico
+    this.toastMessage = message;
     this.showSuccessToast = true;
 
-    // Ocultar el toast después de 3 segundos
+    
     setTimeout(() => {
       this.showSuccessToast = false;
-    }, 3000); // El toast desaparecerá después de 3 segundos
+    }, 3000); 
   }
-   // Método para cerrar el toast
+   
    closeToast() {
     this.showSuccessToast = false;
   }
@@ -158,9 +158,7 @@ export class NotesComponent implements OnInit {
       this.notesService.updateNote(this.newNote.id, this.newNote, this.token).subscribe(
         (response) => {
           console.log('Nota actualizada:', response);
-          // Actualizar las notas en la lista
           this.showToast("Nota actualizada con éxito.");
-          // Encontrar la nota actualizada y reemplazarla en la lista
           const index = this.notes.findIndex(note => note.id === response.id);
           if (index !== -1) {
             this.notes[index] = response;
@@ -177,7 +175,7 @@ export class NotesComponent implements OnInit {
   loadNotes(archived: boolean): void {
     this.selectedSection = archived ? 'archived' : 'all';
     this.selectedTag = null;
-    this.archived = archived; // Establece el estado de archivado
+    this.archived = archived;
 
     console.log('Token: ' + this.token);
 

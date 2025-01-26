@@ -132,7 +132,7 @@
               <span class="text-sm text-gray-700">Tags:</span>
             </div>
             <span class="text-sm font-medium text-gray-700 ml-2" contenteditable="true" (input)="onTagsChange($event)"
-              [textContent]="selectedNote?.tags?.join(', ') || 'sin etiqueta'"></span>
+              [textContent]="selectedNote?.tags?.join(', ') || ''"></span>
 
           </div>
 

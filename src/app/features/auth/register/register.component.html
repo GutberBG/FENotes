@@ -1,1 +1,69 @@
-<p>register works!</p>
+<div class="flex min-h-screen items-center justify-center bg-gray-100">
+    <div class="w-full max-w-md bg-white rounded-lg shadow-md p-6">
+      <h1 class="text-2xl font-semibold text-center text-gray-800 mb-6">Crear Usuario</h1>
+      
+      <!-- Formulario con ngSubmit y formGroup -->
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        
+        <!-- Username -->
+        <div class="mb-4">
+          <label for="username" class="block text-sm font-medium text-gray-600">Nombre de Usuario</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            formControlName="username"
+            class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
+            placeholder="Ingrese su nombre de usuario"
+            required="true"
+          />
+        </div>
+  
+        <!-- Correo Electrónico -->
+        <div class="mb-4">
+          <label for="email" class="block text-sm font-medium text-gray-600">Correo Electrónico</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            formControlName="email"
+            class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
+            placeholder="Ingrese su correo electrónico"
+            required="true"
+          />
+        </div>
+        
+        <!-- Contraseña -->
+        <div class="mb-4">
+          <label for="password" class="block text-sm font-medium text-gray-600">Contraseña</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            formControlName="password"
+            class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
+            placeholder="Ingrese su contraseña"
+            required="true"
+          />
+        </div>
+  
+        <!-- Botón de crear usuario -->
+        <div class="mt-6">
+          <button
+            type="submit"
+            [disabled]="registerForm.invalid"
+            class="w-full px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
+          >
+            Crear Usuario
+          </button>
+        </div>
+      </form>
+  
+      <!-- Enlace de inicio de sesión -->
+      <p class="mt-4 text-center text-sm text-gray-600">
+        ¿Ya tienes una cuenta?
+        <a href="/auth/login" class="text-blue-500 hover:underline">Inicia sesión</a>
+      </p>
+    </div>
+  </div>
+  
