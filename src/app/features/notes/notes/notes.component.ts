@@ -20,6 +20,7 @@ export class NotesComponent implements OnInit {
   isCreatingNote = false;
   token: string = localStorage.getItem('currentUser') ? JSON.parse(localStorage.getItem('currentUser')!).token : '';
   toastMessage: string = 'Nota actualizada con éxito.';
+  searchQuery: string = '';
 
   newNote = {
     id: 0,
@@ -71,6 +72,24 @@ export class NotesComponent implements OnInit {
       }
     });
   }
+
+  onSearchChange(): void {
+    if (!this.searchQuery.trim()) {
+      // Si no hay término de búsqueda, cargar todas las notas
+      this.loadNotes(false);
+    } else {
+      // Hacer una llamada al backend para buscar las notas
+      this.notesService.searchNotes(this.userId, this.searchQuery).subscribe(
+        (notes: any[]) => {
+          this.filteredNotes = notes;
+        },
+        (error) => {
+          console.error('Error al buscar notas:', error);
+        }
+      );
+    }
+  }
+
 
   cancelCreation() {
     this.isCreatingNote = false;
@@ -210,33 +229,65 @@ export class NotesComponent implements OnInit {
     }
   }
   archiveNote() {
-    if (this.selectedNote) {
-      this.notesService.archiveNote(this.selectedNote.id).subscribe(
-        (archivedNote) => {
-          console.log('Nota archivada:', archivedNote);
-          this.loadNotes(false);
-          this.showToast("Nota archivada con éxito.");
-        },
-        (error) => {
-          console.error('Error al archivar la nota:', error);
-        }
-      );
+    if (!this.selectedNote || this.selectedNote.id === null || this.selectedNote.id === 0) {
+      this.showToast("Seleccione una nota.");
+      return;
     }
+  
+    this.notesService.archiveNote(this.selectedNote.id).subscribe(
+      (archivedNote) => {
+        console.log('Nota archivada:', archivedNote);
+        this.loadNotes(false);
+        this.showToast("Nota archivada con éxito.");
+      },
+      (error) => {
+        console.error('Error al archivar la nota:', error);
+      }
+    );
   }
 
   // Método para eliminar una nota
   deleteNote() {
-    if (this.selectedNote) {
-      this.notesService.deleteNote(this.selectedNote.id).subscribe(
-        () => {
-          console.log('Nota eliminada');
-          this.loadNotes(false);
-          this.showToast("Nota eliminada con éxito.");
-        },
-        (error) => {
-          console.error('Error al eliminar la nota:', error);
-        }
-      );
+    if (!this.selectedNote || this.selectedNote.id === null || this.selectedNote.id === 0) {
+      this.showToast("Seleccione una nota.");
+      return;
     }
+  
+    this.notesService.deleteNote(this.selectedNote.id).subscribe(
+      () => {
+        console.log('Nota eliminada');
+        this.loadNotes(false);
+        this.showToast("Nota eliminada con éxito.");
+      },
+      (error) => {
+        console.error('Error al eliminar la nota:', error);
+      }
+    );
+  }
+  toggleArchiveState() {
+    if (this.selectedSection === 'archived') {
+      // Si el estado actual es "archivado", desarchivar
+      this.unarchiveNote();
+    } else {
+      // Si el estado actual es "no archivado", archivar
+      this.archiveNote();
+    }
+  }
+  unarchiveNote() {
+    if (!this.selectedNote || this.selectedNote.id === null || this.selectedNote.id === 0) {
+      this.showToast("Seleccione una nota.");
+      return;
+    }
+  
+    this.notesService.unarchiveNote(this.selectedNote.id).subscribe(
+      (unarchivedNote) => {
+        console.log('Nota desarchivada:', unarchivedNote);
+        this.loadNotes(false);
+        this.showToast("Nota desarchivada con éxito.");
+      },
+      (error) => {
+        console.error('Error al desarchivar la nota:', error);
+      }
+    );
   }
 }

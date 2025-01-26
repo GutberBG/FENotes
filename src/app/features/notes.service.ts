@@ -68,8 +68,18 @@ export class NotesService {
     return this.http.post(`${this.apiUrl}/${id}/archive`, {});
   }
 
+  // Método para desarchivar una nota
+  unarchiveNote(id: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/${id}/unarchive`, {});
+  }
+
   // Método para eliminar una nota
   deleteNote(id: number): Observable<Object> {
     return this.http.delete(`${this.apiUrl}/${id}`);
+  }
+
+  searchNotes(userId: number, query: string): Observable<any[]> {
+    const url = `${this.apiUrl}/search?userId=${userId}&query=${query}`;
+    return this.http.get<any[]>(url);
   }
 }
