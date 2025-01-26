@@ -14,28 +14,30 @@
           class="flex items-center w-full p-2 text-lg font-semibold hover:bg-gray-200 rounded-lg transition duration-200"
           [ngClass]="{'bg-blue-500 text-white': selectedSection === 'all', 'text-gray-700': selectedSection !== 'all'}"
           (click)="loadNotes(false)">
-          <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round"
               d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
           </svg>
           All Notes
         </button>
       </div>
-    
+
       <!-- Archived Notes -->
       <div>
         <button
           class="flex items-center w-full p-2 text-lg font-semibold hover:bg-gray-200 rounded-lg transition duration-200"
           [ngClass]="{'bg-blue-500 text-white': selectedSection === 'archived', 'text-gray-700': selectedSection !== 'archived'}"
           (click)="loadNotes(true)">
-          <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round"
               d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5m8.25 3v6.75m0 0-3-3m3 3 3-3M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
           </svg>
           Archived Notes
         </button>
       </div>
-    
+
       <!-- Tags -->
       <div>
         <h2 class="text-lg font-semibold mb-2">Tags</h2>
@@ -45,8 +47,11 @@
               class="flex items-center w-full p-2 text-sm font-medium hover:bg-gray-200 rounded-lg transition duration-200"
               [ngClass]="{'bg-blue-500 text-white': selectedTag === tag, 'text-gray-700': selectedTag !== tag}"
               (click)="filterNotesByTag(tag)">
-              <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path fill-rule="evenodd" d="M5.25 2.25a3 3 0 0 0-3 3v4.318a3 3 0 0 0 .879 2.121l9.58 9.581c.92.92 2.39 1.186 3.548.428a18.849 18.849 0 0 0 5.441-5.44c.758-1.16.492-2.629-.428-3.548l-9.58-9.581a3 3 0 0 0-2.122-.879H5.25ZM6.375 7.5a1.125 1.125 0 1 0 0-2.25 1.125 1.125 0 0 0 0 2.25Z" clip-rule="evenodd" />
+              <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path fill-rule="evenodd"
+                  d="M5.25 2.25a3 3 0 0 0-3 3v4.318a3 3 0 0 0 .879 2.121l9.58 9.581c.92.92 2.39 1.186 3.548.428a18.849 18.849 0 0 0 5.441-5.44c.758-1.16.492-2.629-.428-3.548l-9.58-9.581a3 3 0 0 0-2.122-.879H5.25ZM6.375 7.5a1.125 1.125 0 1 0 0-2.25 1.125 1.125 0 0 0 0 2.25Z"
+                  clip-rule="evenodd" />
               </svg>
               {{ tag.name }}
             </button>
@@ -68,113 +73,149 @@
 
     <!-- Content Area -->
     <div class="flex-1 flex">
-      <!-- Notes List -->
-      <div class="w-1/4 p-4 space-y-4 overflow-y-auto">
-        <button class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-500 transition duration-200">
-          + Create New Note
-        </button>
 
-        <div *ngFor="let note of filteredNotes">
-          <button class="w-full p-4 shadow-lg rounded-lg hover:bg-gray-100 transition duration-200 text-left"
-            [ngClass]="{'bg-blue-100': selectedNote === note}" (click)="selectNote(note)">
-            <h3 class="font-bold text-lg mb-2">{{ note.title }}</h3>
-            <div class="flex flex-wrap gap-2 mb-2">
-              <!-- Mostrar los tags asociados a cada nota -->
-              <span *ngFor="let tag of note.tags" class="px-2 py-1 text-sm bg-gray-200 text-gray-700 rounded-lg">
-                {{ tag }}
-              </span>
-            </div>
-            <p class="text-sm text-gray-500">{{ note.createdAt | date }}</p>
-          </button>
-        </div>
-      </div>
 
       <!-- Note Details -->
-      <div class="w-2/3 p-4 border-l border-gray-300 flex flex-col">
-        <h3 class="text-4xl font-bold">{{selectedNote?.title}}</h3>
+      <div class="flex-1 flex">
+        <!-- Notes List -->
+        <div class="w-1/4 p-4 space-y-4 overflow-y-auto">
+          <button class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-500 transition duration-200"
+            (click)="startCreatingNote()">
+            + Create New Note
+          </button>
 
-        <!-- Tags -->
-        <div class="flex items-center mt-4">
-          <div class="flex items-center space-x-2">
-            <svg class="w-4 h-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-              stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                d="M5.25 2.25a3 3 0 0 0-3 3v4.318a3 3 0 0 0 .879 2.121l9.58 9.581c.92.92 2.39 1.186 3.548.428a18.849 18.849 0 0 0 5.441-5.44c.758-1.16.492-2.629-.428-3.548l-9.58-9.581a3 3 0 0 0-2.122-.879H5.25ZM6.375 7.5a1.125 1.125 0 1 0 0-2.25 1.125 1.125 0 0 0 0 2.25Z" />
-            </svg>
-            <span class="text-sm text-gray-700">Tags:</span>
+          <div *ngFor="let note of filteredNotes">
+            <button class="w-full p-4 shadow-lg rounded-lg hover:bg-gray-100 transition duration-200 text-left"
+              [ngClass]="{'bg-blue-100': selectedNote === note}" (click)="selectNote(note)">
+              <h3 class="font-bold text-lg mb-2">{{ note.title }}</h3>
+              <div class="flex flex-wrap gap-2 mb-2">
+                <!-- Mostrar los tags asociados a cada nota -->
+                <span *ngFor="let tag of note.tags" class="px-2 py-1 text-sm bg-gray-200 text-gray-700 rounded-lg">
+                  {{ tag }}
+                </span>
+              </div>
+              <p class="text-sm text-gray-500">{{ note.createdAt | date }}</p>
+            </button>
           </div>
-          <span class="text-sm font-medium text-gray-700 ml-2">{{ selectedNote?.tags?.join(', ') }}</span>
         </div>
 
-        <!-- Last Edited -->
-        <div class="flex items-center mt-4">
-          <div class="flex items-center space-x-2">
-            <svg class="w-4 h-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-              stroke="currentColor">
-              <path fill-rule="evenodd"
-                d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 6a.75.75 0 0 0-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 0 0 0-1.5h-3.75V6Z"
-                clip-rule="evenodd" />
-            </svg>
-            <span class="text-sm text-gray-700">Last Edited:</span>
-          </div>
-          <span class="text-sm font-medium text-gray-700 ml-2">{{ selectedNote?.updatedAt | date }}</span>
-        </div>
-        <!-- Divider -->
-        <hr class="my-4 border-gray-300" />
 
-        <!-- Note Details Text -->
-        <div class="flex flex-col h-full">
+
+        <div class="w-2/3 p-4 border-l border-gray-300 flex flex-col">
+          <h3 class="text-4xl font-bold">
+            <div class="text-4xl font-bold" contenteditable="true" (input)="onTitleChange($event)"
+              [textContent]="selectedNote?.title || 'sin titulo'"></div>
+          </h3>
+
+          <!-- Tags -->
+          <div class="flex items-center mt-4">
+            <div class="flex items-center space-x-2">
+              <svg class="w-4 h-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M5.25 2.25a3 3 0 0 0-3 3v4.318a3 3 0 0 0 .879 2.121l9.58 9.581c.92.92 2.39 1.186 3.548.428a18.849 18.849 0 0 0 5.441-5.44c.758-1.16.492-2.629-.428-3.548l-9.58-9.581a3 3 0 0 0-2.122-.879H5.25ZM6.375 7.5a1.125 1.125 0 1 0 0-2.25 1.125 1.125 0 0 0 0 2.25Z" />
+              </svg>
+              <span class="text-sm text-gray-700">Tags:</span>
+            </div>
+            <span class="text-sm font-medium text-gray-700 ml-2" contenteditable="true" (input)="onTagsChange($event)"
+              [textContent]="selectedNote?.tags?.join(', ') || 'sin etiqueta'"></span>
+
+          </div>
+
+          <!-- Last Edited -->
+          <div class="flex items-center mt-4">
+            <div class="flex items-center space-x-2">
+              <svg class="w-4 h-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path fill-rule="evenodd"
+                  d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 6a.75.75 0 0 0-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 0 0 0-1.5h-3.75V6Z"
+                  clip-rule="evenodd" />
+              </svg>
+              <span class="text-sm text-gray-700">Last Edited:</span>
+            </div>
+            <span class="text-sm font-medium text-gray-700 ml-2">{{ selectedNote?.updatedAt | date }}</span>
+          </div>
+
+          <!-- Divider -->
+          <hr class="my-4 border-gray-300" />
+
           <!-- Note Details Text -->
-          <p class="text-sm text-gray-600">{{ selectedNote?.content }}</p>
+          <div class="flex flex-col h-full">
 
-          <!-- Buttons Container, aligned to the bottom -->
-          <div class="mt-auto">
-            <!-- Divider should be placed above buttons -->
-            <hr class="border-gray-300 mb-4" />
-            <div class="flex space-x-4">
-              <button class="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-500 transition duration-200">Save
-                Note</button>
-              <button
-                class="bg-gray-600 text-white py-2 px-4 rounded-lg hover:bg-gray-500 transition duration-200">Cancel</button>
+            <p class="text-sm text-gray-600" contenteditable="true" (input)="onContentChange($event)"
+              [textContent]="selectedNote?.content || 'Descripcion'"></p>
+
+            <!-- Buttons Container, aligned to the bottom -->
+            <div class="mt-auto">
+              <hr class="border-gray-300 mb-4" />
+              <div class="flex space-x-4">
+                <button class="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-500 transition duration-200"
+                  (click)="createNote()">Save Note</button>
+                <button class="bg-gray-600 text-white py-2 px-4 rounded-lg hover:bg-gray-500 transition duration-200"
+                  (click)="cancelCreation()">Cancel</button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- Acciones -->
-      <div class="w-1/5 p-4 border-l border-gray-300">
-        <h3 class="text-lg font-bold">Note Actions</h3>
 
-        <div class="mt-4 space-y-4">
-          <!-- Archive Note Button -->
-          <div class="flex items-center space-x-2">
-            <button
-              class="flex items-center w-full border border-gray-300 py-2 px-4 rounded-lg hover:bg-gray-100 transition duration-200">
-              <svg class="w-5 h-5 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                  d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5m8.25 3v6.75m0 0-3-3m3 3 3-3M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
-              </svg>
-              <span class="ml-2 text-sm text-gray-700">Archive Note</span>
-            </button>
-          </div>
+        <!-- Acciones -->
+        <div class="w-1/5 p-4 border-l border-gray-300">
+          <h3 class="text-lg font-bold">Note Actions</h3>
 
-          <!-- Delete Note Button -->
-          <div class="flex items-center space-x-2">
-            <button
-              class="flex items-center w-full border border-gray-300 py-2 px-4 rounded-lg hover:bg-gray-100 transition duration-200">
-              <svg class="w-5 h-5 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path fill-rule="evenodd"
-                  d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z"
-                  clip-rule="evenodd" />
-              </svg>
+          <div class="mt-4 space-y-4">
+            <!-- Archive Note Button -->
+            <div class="flex items-center space-x-2">
+              <button
+                class="flex items-center w-full border border-gray-300 py-2 px-4 rounded-lg hover:bg-gray-100 transition duration-200">
+                <svg class="w-5 h-5 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5m8.25 3v6.75m0 0-3-3m3 3 3-3M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
+                </svg>
+                <span class="ml-2 text-sm text-gray-700">Archive Note</span>
+              </button>
+            </div>
 
-              <span class="ml-2 text-sm text-gray-700">Delete Note</span>
-            </button>
+            <!-- Delete Note Button -->
+            <div class="flex items-center space-x-2">
+              <button
+                class="flex items-center w-full border border-gray-300 py-2 px-4 rounded-lg hover:bg-gray-100 transition duration-200">
+                <svg class="w-5 h-5 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path fill-rule="evenodd"
+                    d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z"
+                    clip-rule="evenodd" />
+                </svg>
+
+                <span class="ml-2 text-sm text-gray-700">Delete Note</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+
+  <div *ngIf="showSuccessToast" id="toast-success"
+    class="flex items-center max-w-xs p-3 text-gray-500 bg-white rounded-lg shadow-sm border border-gray-600  fixed bottom-4 right-4 z-50"
+    role="alert">
+    <div class="inline-flex items-center justify-center shrink-0 w-6 h-6 text-green-500 bg-green-100 rounded-lg">
+      <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+        viewBox="0 0 20 20">
+        <path
+          d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
+      </svg>
+      <span class="sr-only">Check icon</span>
+    </div>
+    <div class="ms-2 text-sm font-normal">{{ toastMessage }}</div>
+    <button type="button"
+      class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-6 w-6 "
+      aria-label="Close" (click)="closeToast()">
+      <span class="sr-only">Close</span>
+      <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+      </svg>
+    </button>
+  </div>

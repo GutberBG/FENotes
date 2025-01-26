@@ -2,6 +2,18 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
+export interface NoteDTO {
+  id: number;
+  title: string;
+  content: string;
+  archived: boolean;
+  createdAt: string;
+  updatedAt: string;
+  deleted: boolean;
+  userId: number;
+  tags: string[];
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -35,5 +47,19 @@ export class NotesService {
 
     const params = { archived: archived.toString() };
     return this.http.get(`${this.apiUrl}/user/${userId}/archived`, { headers, params, responseType: 'json' });
+  }
+
+  createNote(note: NoteDTO, token: string): Observable<NoteDTO> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+
+    return this.http.post<NoteDTO>(this.apiUrl, note, { headers });
+  }
+
+  updateNote(id: number, note: any, token: string) {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.put<any>(`${this.apiUrl}/${id}`, note, { headers });
   }
 }
