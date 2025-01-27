@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 export interface NoteDTO {
   id: number;
@@ -18,7 +19,7 @@ export interface NoteDTO {
   providedIn: 'root'
 })
 export class NotesService {
-  private apiUrl = 'http://localhost:8080/api/notes'; // Cambia según la URL de tu API
+  private apiUrl = environment.apiUrl + '/notes'; // Cambia según la URL de tu API
 
   constructor(private http: HttpClient) {}
 
