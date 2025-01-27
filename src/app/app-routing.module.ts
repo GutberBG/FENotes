@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { NotesComponent } from './features/notes/notes/notes.component';
+import { AuthGuard } from './core/auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'auth/login', pathMatch: 'full' },
@@ -8,7 +9,7 @@ const routes: Routes = [
     path: 'auth', 
     loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule) // Lazy load de AuthModule
   },
-  { path: 'notes', component: NotesComponent }
+  { path: 'notes', component: NotesComponent, canActivate: [AuthGuard] }
 
 ];
 @NgModule({

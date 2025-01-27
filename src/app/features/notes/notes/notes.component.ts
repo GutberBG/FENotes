@@ -145,7 +145,7 @@ export class NotesComponent implements OnInit {
           console.log('Nota creada:', response);
           this.loadNotes(false);
           this.showToast("Nota creada con éxito.");
-          
+          this.loadTags();
           this.cancelCreation();
         },
         (error) => {
@@ -303,5 +303,10 @@ export class NotesComponent implements OnInit {
         console.error('Error al desarchivar la nota:', error);
       }
     );
+  }
+  logout() {
+    this.authService.logout();
+    // Redirigir al usuario después del logout
+    window.location.href = 'auth/login';
   }
 }
