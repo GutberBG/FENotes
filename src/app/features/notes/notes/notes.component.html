@@ -1,19 +1,18 @@
-<div class="flex h-screen">
+<div class="flex h-screen bg-white dark:bg-gray-900 dark:text-gray-100">
   <!-- Sidebar -->
-  <div class="w-1/6 bg-white border-r border-gray-300 flex flex-col">
+  <div class="w-1/6 bg-white border-r border-gray-300 flex flex-col dark:bg-gray-800 dark:border-gray-700">
     <!-- Logo -->
     <div class="p-4">
-      <h1 class="text-2xl font-bold">Logo</h1>
+      <h1 class="text-2xl font-bold dark:text-white">Logo</h1>
     </div>
 
     <!-- Menu vertical -->
     <nav class="flex-1 overflow-y-auto p-4 space-y-4">
       <!-- All Notes -->
-      
       <div>
         <button
-          class="flex items-center w-full p-2 text-lg font-semibold hover:bg-gray-200 rounded-lg transition duration-200"
-          [ngClass]="{'bg-blue-500 text-white': selectedSection === 'all', 'text-gray-700': selectedSection !== 'all'}"
+          class="flex items-center w-full p-2 text-lg font-semibold hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition duration-200"
+          [ngClass]="{'bg-blue-500 text-white': selectedSection === 'all', 'text-gray-700 dark:text-gray-300': selectedSection !== 'all'}"
           (click)="loadNotes(false)">
           <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
             stroke="currentColor">
@@ -27,8 +26,8 @@
       <!-- Archived Notes -->
       <div>
         <button
-          class="flex items-center w-full p-2 text-lg font-semibold hover:bg-gray-200 rounded-lg transition duration-200"
-          [ngClass]="{'bg-blue-500 text-white': selectedSection === 'archived', 'text-gray-700': selectedSection !== 'archived'}"
+          class="flex items-center w-full p-2 text-lg font-semibold hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition duration-200"
+          [ngClass]="{'bg-blue-500 text-white': selectedSection === 'archived', 'text-gray-700 dark:text-gray-300': selectedSection !== 'archived'}"
           (click)="loadNotes(true)">
           <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
             stroke="currentColor">
@@ -41,12 +40,12 @@
 
       <!-- Tags -->
       <div>
-        <h2 class="text-lg font-semibold mb-2">Tags</h2>
+        <h2 class="text-lg font-semibold mb-2 dark:text-white">Tags</h2>
         <ul class="space-y-2">
           <li *ngFor="let tag of tags">
             <button
-              class="flex items-center w-full p-2 text-sm font-medium hover:bg-gray-200 rounded-lg transition duration-200"
-              [ngClass]="{'bg-blue-500 text-white': selectedTag === tag, 'text-gray-700': selectedTag !== tag}"
+              class="flex items-center w-full p-2 text-sm font-medium hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition duration-200"
+              [ngClass]="{'bg-blue-500 text-white': selectedTag === tag, 'text-gray-700 dark:text-gray-300': selectedTag !== tag}"
               (click)="filterNotesByTag(tag)">
               <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor">
@@ -60,35 +59,30 @@
         </ul>
       </div>
     </nav>
-
   </div>
 
   <!-- Main Content -->
   <div class="flex-1 flex flex-col">
     <!-- Header -->
-    <div class="flex items-center justify-between p-4 border-b border-gray-300">
-      <h2 class="text-xl font-bold">All Notes</h2>
+    <div class="flex items-center justify-between p-4 border-b border-gray-300 dark:border-gray-700">
+      <h2 class="text-xl font-bold dark:text-white">All Notes</h2>
       <div class="flex items-center mr-4 w-80 relative">
-        <!-- Icono de búsqueda dentro del input -->
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 absolute left-3" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
           <path fill-rule="evenodd" d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z" clip-rule="evenodd" />
         </svg>
     
-        <!-- Campo de búsqueda -->
         <input
           type="text"
           [(ngModel)]="searchQuery"
           (ngModelChange)="onSearchChange()"
           placeholder="Buscar por título, tags o contenido..."
-          class="border border-gray-300 p-2 pl-10 rounded-lg w-full"
+          class="border border-gray-300 dark:border-gray-600 p-2 pl-10 rounded-lg w-full bg-white dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400"
         />
       </div>
     </div>
 
     <!-- Content Area -->
     <div class="flex-1 flex">
-
-
       <!-- Note Details -->
       <div class="flex-1 flex">
         <!-- Notes List -->
@@ -99,69 +93,64 @@
           </button>
 
           <div *ngFor="let note of filteredNotes">
-            <button class="w-full p-4 shadow-lg rounded-lg hover:bg-gray-100 transition duration-200 text-left"
-              [ngClass]="{'bg-blue-100': selectedNote === note}" (click)="selectNote(note)">
-              <h3 class="font-bold text-lg mb-2">{{ note.title }}</h3>
+            <button class="w-full p-4 shadow-lg rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition duration-200 text-left"
+              [ngClass]="{'bg-blue-100 dark:bg-blue-900': selectedNote === note}" (click)="selectNote(note)">
+              <h3 class="font-bold text-lg mb-2 dark:text-white">{{ note.title }}</h3>
               <div class="flex flex-wrap gap-2 mb-2">
-                <!-- Mostrar los tags asociados a cada nota -->
-                <span *ngFor="let tag of note.tags" class="px-2 py-1 text-sm bg-gray-200 text-gray-700 rounded-lg">
+                <span *ngFor="let tag of note.tags" class="px-2 py-1 text-sm bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-200 rounded-lg">
                   {{ tag }}
                 </span>
               </div>
-              <p class="text-sm text-gray-500">{{ note.createdAt | date }}</p>
+              <p class="text-sm text-gray-500 dark:text-gray-400">{{ note.createdAt | date }}</p>
             </button>
           </div>
         </div>
 
-
-
-        <div *ngIf="selectedNote; else noNoteSelected" class="w-2/3 p-4 border-l border-gray-300 flex flex-col">
-          <h3 class="text-4xl font-bold">
-            <div class="text-4xl font-bold" contenteditable="true" (input)="onTitleChange($event)"
+        <div *ngIf="selectedNote; else noNoteSelected" class="w-2/3 p-4 border-l border-gray-300 dark:border-gray-700 flex flex-col">
+          <h3 class="text-4xl font-bold dark:text-white">
+            <div class="text-4xl font-bold dark:text-white" contenteditable="true" (input)="onTitleChange($event)"
               [textContent]="selectedNote?.title || 'sin titulo'"></div>
           </h3>
 
           <!-- Tags -->
           <div class="flex items-center mt-4">
             <div class="flex items-center space-x-2">
-              <svg class="w-4 h-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+              <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round"
                   d="M5.25 2.25a3 3 0 0 0-3 3v4.318a3 3 0 0 0 .879 2.121l9.58 9.581c.92.92 2.39 1.186 3.548.428a18.849 18.849 0 0 0 5.441-5.44c.758-1.16.492-2.629-.428-3.548l-9.58-9.581a3 3 0 0 0-2.122-.879H5.25ZM6.375 7.5a1.125 1.125 0 1 0 0-2.25 1.125 1.125 0 0 0 0 2.25Z" />
               </svg>
-              <span class="text-sm text-gray-700">Tags:</span>
+              <span class="text-sm text-gray-700 dark:text-gray-300">Tags:</span>
             </div>
-            <span class="text-sm font-medium text-gray-700 ml-2" contenteditable="true" (input)="onTagsChange($event)"
+            <span class="text-sm font-medium text-gray-700 dark:text-gray-300 ml-2" contenteditable="true" (input)="onTagsChange($event)"
               [textContent]="selectedNote?.tags?.join(', ') || ''"></span>
-
           </div>
 
           <!-- Last Edited -->
           <div class="flex items-center mt-4">
             <div class="flex items-center space-x-2">
-              <svg class="w-4 h-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+              <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor">
                 <path fill-rule="evenodd"
                   d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 6a.75.75 0 0 0-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 0 0 0-1.5h-3.75V6Z"
                   clip-rule="evenodd" />
               </svg>
-              <span class="text-sm text-gray-700">Last Edited:</span>
+              <span class="text-sm text-gray-700 dark:text-gray-300">Last Edited:</span>
             </div>
-            <span class="text-sm font-medium text-gray-700 ml-2">{{ selectedNote?.updatedAt | date }}</span>
+            <span class="text-sm font-medium text-gray-700 dark:text-gray-300 ml-2">{{ selectedNote?.updatedAt | date }}</span>
           </div>
 
           <!-- Divider -->
-          <hr class="my-4 border-gray-300" />
+          <hr class="my-4 border-gray-300 dark:border-gray-700" />
 
           <!-- Note Details Text -->
           <div class="flex flex-col h-full">
-
-            <div class="text-sm text-gray-600" contenteditable="true" (input)="onContentChange($event)"
+            <div class="text-sm text-gray-600 dark:text-gray-300" contenteditable="true" (input)="onContentChange($event)"
             [innerHTML]="selectedNote?.content || 'Descripcion'"></div>
 
-            <!-- Buttons Container, aligned to the bottom -->
+            <!-- Buttons Container -->
             <div class="mt-auto">
-              <hr class="border-gray-300 mb-4" />
+              <hr class="border-gray-300 dark:border-gray-700 mb-4" />
               <div class="flex space-x-4">
                 <button class="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-500 transition duration-200"
                   (click)="createNote()">Save Note</button>
@@ -173,28 +162,28 @@
         </div>
 
         <ng-template #noNoteSelected>
-          <div class="w-2/3 p-4 border-l border-gray-300 flex items-center justify-center">
-            <span class="text-xl text-gray-500">Seleccione una nota</span>
+          <div class="w-2/3 p-4 border-l border-gray-300 dark:border-gray-700 flex items-center justify-center">
+            <span class="text-xl text-gray-500 dark:text-gray-400">Seleccione una nota</span>
           </div>
         </ng-template>
 
 
         <!-- Acciones -->
-        <div class="w-1/5 p-4 border-l border-gray-300">
-          <h3 class="text-lg font-bold">Note Actions</h3>
+        <div class="w-1/5 p-4 border-l border-gray-300 dark:border-gray-700">
+          <h3 class="text-lg font-bold dark:text-white">Note Actions</h3>
         
           <div class="mt-4 space-y-4">
             <!-- Archive Note Button -->
             <div class="flex items-center space-x-2">
               <button
                 (click)="toggleArchiveState()"
-                class="flex items-center w-full border border-gray-300 py-2 px-4 rounded-lg hover:bg-gray-100 transition duration-200">
-                <svg class="w-5 h-5 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                class="flex items-center w-full border border-gray-300 py-2 px-4 rounded-lg hover:bg-gray-100 transition duration-200 dark:border-gray-600 dark:hover:bg-gray-800">
+                <svg class="w-5 h-5 text-gray-600 dark:text-gray-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                   stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round"
                     d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5m8.25 3v6.75m0 0-3-3m3 3 3-3M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
                 </svg>
-                <span class="ml-2 text-sm text-gray-700">{{ selectedSection === 'archived' ? 'Unarchive Note' : 'Archive Note' }}</span>
+                <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">{{ selectedSection === 'archived' ? 'Unarchive Note' : 'Archive Note' }}</span>
               </button>
             </div>
         
@@ -202,14 +191,14 @@
             <div class="flex items-center space-x-2">
               <button
                 (click)="openDeleteModal()"
-                class="flex items-center w-full border border-gray-300 py-2 px-4 rounded-lg hover:bg-gray-100 transition duration-200">
-                <svg class="w-5 h-5 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                class="flex items-center w-full border border-gray-300 py-2 px-4 rounded-lg hover:bg-gray-100 transition duration-200 dark:border-gray-600 dark:hover:bg-gray-800">
+                <svg class="w-5 h-5 text-gray-600 dark:text-gray-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                   stroke="currentColor">
                   <path fill-rule="evenodd"
                     d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z"
                     clip-rule="evenodd" />
                 </svg>
-                <span class="ml-2 text-sm text-gray-700">Delete Note</span>
+                <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">Delete Note</span>
               </button>
             </div>
           </div>
@@ -219,9 +208,9 @@
   </div>
 
   <div *ngIf="showSuccessToast" id="toast-success"
-    class="flex items-center max-w-xs p-3 text-gray-500 bg-white rounded-lg shadow-sm border border-gray-600  fixed bottom-4 right-4 z-50"
+    class="flex items-center max-w-xs p-3 text-gray-500 bg-white rounded-lg shadow-sm border border-gray-600  fixed bottom-4 right-4 z-50  dark:text-gray-200 dark:bg-gray-800 dark:border-gray-700"
     role="alert">
-    <div class="inline-flex items-center justify-center shrink-0 w-6 h-6 text-green-500 bg-green-100 rounded-lg">
+    <div class="inline-flex items-center justify-center shrink-0 w-6 h-6 text-green-500 bg-green-100 rounded-lg dark:text-green-400 dark:bg-green-700">
       <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
         viewBox="0 0 20 20">
         <path
@@ -231,7 +220,7 @@
     </div>
     <div class="ms-2 text-sm font-normal">{{ toastMessage }}</div>
     <button type="button"
-      class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-6 w-6 "
+      class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-6 w-6 dark:bg-gray-800 dark:text-gray-400 dark:hover:text-gray-100 dark:focus:ring-gray-600 dark:hover:bg-gray-700"
       aria-label="Close" (click)="closeToast()">
       <span class="sr-only">Close</span>
       <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -242,24 +231,24 @@
   </div>
 
   <!-- Modal de confirmación de eliminación -->
-  <div *ngIf="isDeleteModalOpen" class="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
-    <div class="bg-white p-6 rounded-lg w-96">
+  <div *ngIf="isDeleteModalOpen" class="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50 dark:bg-black dark:bg-opacity-60">
+    <div class="bg-white p-6 rounded-lg w-96 dark:bg-gray-800 dark:border-gray-700">
       <div class="flex items-center mb-4">
         <!-- Icono de basura -->
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600 mr-3" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600 mr-3 dark:text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
           <path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z" clip-rule="evenodd" />
         </svg>
         
-        <h3 class="text-xl font-semibold">Delete Note</h3>
+        <h3 class="text-xl font-semibold dark:text-gray-200">Delete Note</h3>
       </div>
       
       <!-- Mensaje de confirmación -->
-      <p class="text-gray-700 mb-4">Are you sure you want to permanently delete this note? This action cannot be undone.</p>
+      <p class="text-gray-700 mb-4 dark:text-gray-400">Are you sure you want to permanently delete this note? This action cannot be undone.</p>
       
       <!-- Botones -->
       <div class="flex justify-end space-x-4">
-        <button (click)="cancelDelete()" class="bg-gray-300 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-400">Cancel</button>
-        <button (click)="confirmDelete()" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">Delete Note</button>
+        <button (click)="cancelDelete()" class="bg-gray-300 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-400 dark:bg-gray-600 dark:text-gray-200 dark:hover:bg-gray-500">Cancel</button>
+        <button (click)="confirmDelete()" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 dark:bg-red-600 dark:hover:bg-red-500">Delete Note</button>
       </div>
     </div>
   </div>
