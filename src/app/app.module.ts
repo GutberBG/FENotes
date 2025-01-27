@@ -11,11 +11,13 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './core/auth.interceptor';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NotesComponent } from './features/notes/notes/notes.component';
+import { DarkmodeComponent } from './shared/components/darkmode/darkmode.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NotesComponent
+    NotesComponent,
+    DarkmodeComponent
   ],
   imports: [
     BrowserModule,
