@@ -1,27 +1,125 @@
-# FENotes
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.1.
+# Frontend de Notas
 
-## Development server
+## Descripción
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Este es el frontend para la aplicación de gestión de notas. Proporciona funcionalidades para manejar notas, etiquetas y usuarios, con opciones como archivar nota, desarchivar nota, y búsqueda avanzada.
 
-## Code scaffolding
+----------
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Cómo probar la aplicación
 
-## Build
+### 1. Configuración del Proyecto
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+#### Clonar el repositorio:
 
-## Running unit tests
+Primero, clona el repositorio del proyecto en tu máquina local:
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```
+git clone https://github.com/GutberBG/FENotes.git
+cd FENotes
+```
 
-## Running end-to-end tests
+#### Instalar las dependencias:
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Ejecuta el siguiente comando para instalar las dependencias necesarias del proyecto:
 
-## Further help
+```
+npm install
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+#### Configurar las variables de entorno:
+
+Asegúrate de configurar correctamente el archivo `src/environments/environment.ts` para que apunte al backend correspondiente. Ejemplo:
+
+```
+export const environment = {
+  production: false,
+  apiUrl: 'http://localhost:8080/api', // Cambia esta URL según tu configuración
+};
+```
+
+### 2. Ejecutar la aplicación
+
+Para iniciar el proyecto en tu entorno local, ejecuta:
+
+```
+ng serve
+```
+
+Esto iniciará el frontend en: http://localhost:4200.
+
+----------
+
+## Funcionalidades
+
+### Gestión de Usuarios
+
+1.  **Autenticación de usuario:**
+    
+    -   Permite al usuario iniciar sesión para acceder a sus notas.
+        
+    -   Integrado con JWT para autenticación segura.
+    -   Permite crear un usuario para usar la aplicación
+        
+ 
+
+### Gestión de Notas
+
+1.  **Crear, editar y eliminar notas:**
+    
+    -   Administra el contenido de manera sencilla e intuitiva.
+        
+2.  **Archivo y desarchivo de notas:**
+    
+    -   Mantiene las notas organizadas moviéndolas a una sección de archivadas.
+        
+3.  **Búsqueda avanzada:**
+    
+    -   Filtra notas por título, contenido o etiquetas para una gestión eficiente.
+        
+4.  **Sincronización con el backend:**
+    
+    -   Todos los cambios realizados se sincronizan con la API.
+        
+
+### Etiquetas
+
+        
+1.  **Listado de etiquetas disponibles:**
+    
+    -   Muestra las etiquetas creadas por el usuario.
+        
+        
+
+----------
+
+## Notas Importantes
+
+1.  **Backend:**
+    
+    -   Asegúrate de que el backend esté configurado correctamente y corriendo en la dirección especificada por `apiUrl` en el archivo de entornos.
+        
+2.  **Dependencias:**
+    
+    -   Revisa y actualiza las dependencias regularmente usando:
+        
+        ```
+        npm update
+        ```
+        
+3.  **Ambientes de Producción:**
+    
+    -   Usa el archivo `src/environments/environment.prod.ts` para especificar la configuración de producción.
+        
+
+----------
+
+## Tecnologías Utilizadas
+
+-   Angular 15+
+    
+-   Tailwind CSS
+    
+-   TypeScript
+    
